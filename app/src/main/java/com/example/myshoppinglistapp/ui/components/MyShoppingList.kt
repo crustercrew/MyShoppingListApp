@@ -52,12 +52,26 @@ fun MyShoppingList(modifier: Modifier = Modifier) {
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(16.dp),
         ) {
-            items(shoppingItem){
-                ShoppingListItem(
-                    item = it,
-                    {},
-                    {}
-                )
+            items(shoppingItem){ item ->
+                if(item.isEditing){
+                    ShoppingItemEdit(
+                        item = item,
+                        onEditComplete = { editedName, editedQuantity ->
+                            shoppingItem = shoppingItem.map { it.copy(isEditing = false) }
+                            val editedItem = shoppingItem.find { it.id == item.id }
+                            editedItem?.let {
+                                it.name = editedName
+                                it.quantity = editedQuantity
+                            }
+                        }
+                    )
+                }else{
+                    ShoppingListItem(
+                        item = item,
+                        {shoppingItem = shoppingItem.map { it.copy(isEditing = it.id == item.id) }},
+                        {shoppingItem = shoppingItem.filter { it.id != item.id }}
+                    )
+                }
             }
         }
     }
