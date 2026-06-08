@@ -2,6 +2,8 @@ package com.example.myshoppinglistapp.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,20 +38,26 @@ fun MyShoppingList(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center
-
     ) {
+        Spacer(
+            modifier = Modifier.fillMaxHeight(0.1f)
+        )
         Button(
             onClick = { showDialog = true },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            Text("Add Item")
+            Text("Add Shopping Item")
         }
 
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(16.dp),
         ) {
             items(shoppingItem){
-
+                ShoppingListItem(
+                    item = it,
+                    {},
+                    {}
+                )
             }
         }
     }
